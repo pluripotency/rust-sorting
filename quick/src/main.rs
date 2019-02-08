@@ -1,11 +1,11 @@
-fn swap(array: &mut Vec<usize>, a: usize, b: usize){
+fn swap<T: Copy>(array: &mut Vec<T>, a: usize, b: usize) {
     let temp = array[a];
     array[a] = array[b];
     array[b] = temp;
 }
-fn pivot(array: &mut Vec<usize>, i: usize, j: usize)-> usize {
+fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> T {
     let x = array[i];
-    let y = array[i + (j-i)/2];
+    let y = array[i / 2 + j / 2]; // avoid (i+j:overflow)/2
     let z = array[j];
     if x < y {
         if y < z {
@@ -15,7 +15,7 @@ fn pivot(array: &mut Vec<usize>, i: usize, j: usize)-> usize {
         } else {
             z
         }
-    }else{
+    } else {
         if z < y {
             y
         } else if x < z {
@@ -25,13 +25,19 @@ fn pivot(array: &mut Vec<usize>, i: usize, j: usize)-> usize {
         }
     }
 }
-fn partition(array: &mut Vec<usize>, i: usize, j: usize, p: usize)-> usize {
+fn partition<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize, p: T) -> usize {
     let mut l = i.clone();
     let mut r = j.clone();
     loop {
-        while array[l] < p { l += 1; }
-        while p < array[r] { r -= 1; }
-        if l > r { break; }
+        while array[l] < p {
+            l += 1;
+        }
+        while p < array[r] {
+            r -= 1;
+        }
+        if l > r {
+            break;
+        }
         swap(array, l, r);
         l += 1;
         r -= 1;
@@ -39,11 +45,11 @@ fn partition(array: &mut Vec<usize>, i: usize, j: usize, p: usize)-> usize {
     l
 }
 
-fn quick_sort(array: &mut Vec<usize>, i: usize, j: usize) {
+fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
     if i < j {
         let p = pivot(array, i, j);
         let k = partition(array, i, j, p);
-        quick_sort(array, i, k-1);
+        quick_sort(array, i, k - 1);
         quick_sort(array, k, j);
     }
 }
@@ -51,6 +57,6 @@ fn quick_sort(array: &mut Vec<usize>, i: usize, j: usize) {
 fn main() {
     let mut v = vec![20, 12, 45, 19, 91, 55];
     let length = v.len();
-    quick_sort(&mut v, 0, length-1);
+    quick_sort(&mut v, 0, length - 1);
     println!("{:?}", v);
 }
