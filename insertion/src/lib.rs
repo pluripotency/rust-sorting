@@ -1,4 +1,4 @@
-fn insertion_sort<T: Ord + Copy, U: Fn(T, T) -> bool>(array: &mut Vec<T>, comparator: U) {
+pub fn insertion_sort<T: Ord + Copy, U: Fn(T, T) -> bool>(array: &mut Vec<T>, comparator: U) {
     for i in 1..array.len() {
         let num_to_insert = array[i];
         let mut compare_index = i;
@@ -10,8 +10,14 @@ fn insertion_sort<T: Ord + Copy, U: Fn(T, T) -> bool>(array: &mut Vec<T>, compar
     }
 }
 
-fn main() {
-    let mut v = vec![20, 12, 45, 19, 91, 55];
-    insertion_sort(&mut v, |a, b| a < b);
-    println!("{:?}", v);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_insertion_sort() {
+        let mut v = vec![20, 12, 45, 19, 91, 55];
+        insertion_sort(&mut v, |a, b| a < b);
+        assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+    }
 }

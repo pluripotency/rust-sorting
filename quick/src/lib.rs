@@ -22,6 +22,7 @@ fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> T {
         }
     }
 }
+
 fn partition<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize, p: T) -> usize {
     let mut l = i.clone();
     let mut r = j.clone();
@@ -42,7 +43,7 @@ fn partition<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize, p: T) -> usi
     l
 }
 
-fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
+pub fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
     if i < j {
         let p = pivot(array, i, j);
         let k = partition(array, i, j, p);
@@ -51,9 +52,15 @@ fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
     }
 }
 
-fn main() {
-    let mut v = vec![20, 12, 45, 19, 91, 55];
-    let length = v.len();
-    quick_sort(&mut v, 0, length - 1);
-    println!("{:?}", v);
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_quick_sort() {
+        let mut v = vec![20, 12, 45, 19, 91, 55];
+        let length = v.len();
+        quick_sort(&mut v, 0, length - 1);
+        assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+    }
 }
