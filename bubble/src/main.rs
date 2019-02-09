@@ -1,15 +1,6 @@
 use std::fmt::{Debug, Display};
 use std::ops::BitXor;
-
-fn swap<T>(array: &mut Vec<T>, from: usize, to: usize)
-where
-    T: Copy + BitXor<Output = T>,
-{
-    // XOR trick can be used only for numbers
-    array[from] = array[from] ^ array[to];
-    array[to] = array[from] ^ array[to];
-    array[from] = array[from] ^ array[to];
-}
+use swap::swap_by_xor as swap;
 
 fn bubble_sort<T, U>(array: &mut Vec<T>, comparator: U)
 where

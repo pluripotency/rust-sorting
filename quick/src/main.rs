@@ -1,8 +1,5 @@
-fn swap<T: Copy>(array: &mut Vec<T>, a: usize, b: usize) {
-    let temp = array[a];
-    array[a] = array[b];
-    array[b] = temp;
-}
+use swap::swap;
+
 fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> T {
     let x = array[i];
     let y = array[i / 2 + j / 2]; // avoid (i+j:overflow)/2

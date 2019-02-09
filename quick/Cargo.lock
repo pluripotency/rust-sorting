@@ -1,4 +1,11 @@
 [[package]]
 name = "quick"
 version = "0.1.0"
+dependencies = [
+ "swap 0.1.0",
+]
+
+[[package]]
+name = "swap"
+version = "0.1.0"
 

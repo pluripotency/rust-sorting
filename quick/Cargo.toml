@@ -5,3 +5,4 @@ authors = ["Masayoshi Kokuryo <masakoku@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+swap = { path = "../swap" }
