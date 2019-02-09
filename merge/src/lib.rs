@@ -1,3 +1,22 @@
+fn append_smaller(v: &mut Vec<usize>, array: &mut Vec<usize>, a: usize, b: usize)-> bool {
+    print!("{} ? {}  ", array[a], array[b]);
+    if array[a] <= array[b] {
+        println!("smaller is {}", array[a]);
+        v.push(array[a]);
+        true
+    } else {
+        println!("smaller is {}", array[b]);
+        v.push(array[b]);
+        false
+    }
+}
+fn append_rest(v: &mut Vec<usize>, array: &mut Vec<usize>, from: usize, to: usize) -> usize {
+    for i in from..(to+1) {
+        print!("append {} ", array[i]);
+        v.push(array[i]);
+    }
+    to
+}
 fn merge(array: &mut Vec<usize>, left: usize, mid: usize, right: usize) {
     let mut i = left;
     let mut j = mid + 1;
@@ -7,31 +26,17 @@ fn merge(array: &mut Vec<usize>, left: usize, mid: usize, right: usize) {
         i = left;
         j = mid + 1;
         while (i <= mid) && (j <= right) {
-            print!("{} ? {}  ", array[i], array[j]);
-            if array[i] <= array[j] {
-                println!("smaller is {}", array[i]);
-                v.push(array[i]);
-                i += 1;
-            } else {
-                println!("smaller is {}", array[j]);
-                v.push(array[j]);
-                j += 1;
+            match append_smaller(&mut v, array, i, j) {
+                true => i += 1,
+                false => j +=1
             }
         }
         if i == mid + 1 {
             print!("after mid ");
-            while j <= right {
-                print!("append {} ", array[j]);
-                v.push(array[j]);
-                j += 1;
-            }
+            j = append_rest(&mut v, array, j, right);
         } else {
             print!("before mid ");
-            while i <= mid {
-                print!("append {} ", array[i]);
-                v.push(array[i]);
-                i += 1;
-            }
+            i = append_rest(&mut v, array, i, mid);
         }
     }
     for k in 0..v.len() {
