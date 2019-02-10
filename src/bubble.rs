@@ -1,5 +1,5 @@
 use std::ops::BitXor;
-use swap::swap_by_xor as swap;
+use crate::swap::swap_by_xor as swap;
 
 pub fn bubble_sort<T, U>(array: &mut Vec<T>, comparator: U)
 where

@@ -1,4 +1,4 @@
-use swap::swap;
+use crate::swap::swap;
 
 fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> T {
     let x = array[i];

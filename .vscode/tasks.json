@@ -1,0 +1,35 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build single Rust file",
+            "type": "shell",
+            "command": "rustc",
+            "args": [
+                "-o",
+                "${workspaceRoot}/${fileBasenameNoExtention}",
+                "-C",
+                "debug_assertion=yes",
+                "-g",
+                "${file}"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always"
+            }
+        },
+        {
+            "type": "cargo",
+            "label": "cargo build",
+            "command": "cargo",
+            "args": [
+                "build"
+            ],
+            "problemMatcher": [
+                "$rustc"
+            ]
+        }
+    ]
+}
