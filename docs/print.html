@@ -1,0 +1,402 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sorting by Rust</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">var path_to_root = "";</script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="bubble.html"><strong aria-hidden="true">1.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">2.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">3.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">4.</strong> Merge Sort</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Sorting by Rust</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble Sort</h1></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use std::ops::BitXor;
+
+pub fn swap&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
+where
+    T: Copy + BitXor&lt;Output = T&gt;,
+{
+    // XOR trick can be used only for numbers
+    array[from] = array[from] ^ array[to];
+    array[to] = array[from] ^ array[to];
+    array[from] = array[from] ^ array[to];
+}
+
+pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
+where
+    T: Copy + BitXor&lt;Output = T&gt;,
+    U: Fn(T, T) -&gt; bool,
+{
+    let length = array.len();
+    for i in 0..(length - 1) {
+        for j in (i + 1)..length {
+            if comparator(array[j], array[i]) {
+                swap(array, i, j);
+            }
+        }
+    }
+}
+
+let mut v = vec![20, 12, 45, 19, 91, 55];
+#println!(&quot;before: {:?}&quot;, v);
+bubble_sort(&amp;mut v, |a, b| a &lt; b);
+#println!(&quot;sorted: {:?}&quot;, v);
+#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+#}</code></pre></pre>
+<a class="header" href="#insertion-sort" id="insertion-sort"><h1>Insertion Sort</h1></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn insertion_sort&lt;T: Ord + Copy, U: Fn(T, T) -&gt; bool&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U) {
+    for i in 1..array.len() {
+        let num_to_insert = array[i];
+        let mut compare_index = i;
+        while (compare_index &gt; 0) &amp;&amp; comparator(num_to_insert, array[compare_index - 1]) {
+            array[compare_index] = array[compare_index - 1];
+            compare_index -= 1;
+        }
+        array[compare_index] = num_to_insert;
+    }
+}
+
+let mut v = vec![20, 12, 45, 19, 91, 55];
+#println!(&quot;before: {:?}&quot;, v);
+insertion_sort(&amp;mut v, |a, b| a &lt; b);
+#println!(&quot;sorted: {:?}&quot;, v);
+#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+#}</code></pre></pre>
+<a class="header" href="#quick-sort" id="quick-sort"><h1>Quick Sort</h1></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+pub fn swap&lt;T: Copy&gt;(array: &amp;mut Vec&lt;T&gt;, a: usize, b: usize) {
+    let temp = array[a];
+    array[a] = array[b];
+    array[b] = temp;
+}
+
+fn pivot&lt;T: Ord + Copy&gt;(array: &amp;mut Vec&lt;T&gt;, i: usize, j: usize) -&gt; T {
+    let x = array[i];
+    let y = array[i / 2 + j / 2]; // avoid (i+j:overflow)/2
+    let z = array[j];
+    if x &lt; y {
+        if y &lt; z {
+            y
+        } else if z &lt; x {
+            x
+        } else {
+            z
+        }
+    } else {
+        if z &lt; y {
+            y
+        } else if x &lt; z {
+            x
+        } else {
+            z
+        }
+    }
+}
+
+fn partition&lt;T: Ord + Copy&gt;(array: &amp;mut Vec&lt;T&gt;, i: usize, j: usize, p: T) -&gt; usize {
+    let mut l = i.clone();
+    let mut r = j.clone();
+    loop {
+        while array[l] &lt; p {
+            l += 1;
+        }
+        while p &lt; array[r] {
+            r -= 1;
+        }
+        if l &gt; r {
+            break;
+        }
+        swap(array, l, r);
+        l += 1;
+        r -= 1;
+    }
+    l
+}
+
+pub fn quick_sort&lt;T: Ord + Copy&gt;(array: &amp;mut Vec&lt;T&gt;, i: usize, j: usize) {
+    if i &lt; j {
+        let p = pivot(array, i, j);
+        let k = partition(array, i, j, p);
+        quick_sort(array, i, k - 1);
+        quick_sort(array, k, j);
+    }
+}
+
+let mut v = vec![20, 12, 45, 19, 91, 55];
+#println!(&quot;before: {:?}&quot;, v);
+let length = v.len();
+quick_sort(&amp;mut v, 0, length - 1);
+#println!(&quot;sorted: {:?}&quot;, v);
+#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+#}</code></pre></pre>
+<a class="header" href="#merge-sort" id="merge-sort"><h1>Merge Sort</h1></a>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+fn append_smaller(v: &amp;mut Vec&lt;usize&gt;, array: &amp;mut Vec&lt;usize&gt;, a: usize, b: usize)-&gt; bool {
+    print!(&quot;{} ? {}  &quot;, array[a], array[b]);
+    if array[a] &lt;= array[b] {
+        println!(&quot;smaller is {}&quot;, array[a]);
+        v.push(array[a]);
+        true
+    } else {
+        println!(&quot;smaller is {}&quot;, array[b]);
+        v.push(array[b]);
+        false
+    }
+}
+fn append_rest(v: &amp;mut Vec&lt;usize&gt;, array: &amp;mut Vec&lt;usize&gt;, from: usize, to: usize) -&gt; usize {
+    for i in from..(to+1) {
+        print!(&quot;append {} &quot;, array[i]);
+        v.push(array[i]);
+    }
+    to
+}
+fn merge(array: &amp;mut Vec&lt;usize&gt;, left: usize, mid: usize, right: usize) {
+    let mut i = left;
+    let mut j = mid + 1;
+    let mut v: Vec&lt;usize&gt; = vec![];
+
+    while (i &lt;= mid) &amp;&amp; (j &lt;= right) {
+        i = left;
+        j = mid + 1;
+        while (i &lt;= mid) &amp;&amp; (j &lt;= right) {
+            match append_smaller(&amp;mut v, array, i, j) {
+                true =&gt; i += 1,
+                false =&gt; j +=1
+            }
+        }
+        if i == mid + 1 {
+            print!(&quot;after mid &quot;);
+            j = append_rest(&amp;mut v, array, j, right);
+        } else {
+            print!(&quot;before mid &quot;);
+            i = append_rest(&amp;mut v, array, i, mid);
+        }
+    }
+    for k in 0..v.len() {
+        array[k + left] = v[k];
+    }
+    println!(&quot;\ncurrently: {:?}&quot;, array);
+}
+
+pub fn merge_sort(array: &amp;mut Vec&lt;usize&gt;, left: usize, right: usize) {
+    if left == right {
+        return;
+    }
+    let mid = left / 2 + right / 2;
+    merge_sort(array, left, mid);
+    merge_sort(array, mid + 1, right);
+    merge(array, left, mid, right);
+}
+
+let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
+#println!(&quot;before: {:?}&quot;, v);
+let length = v.len();
+merge_sort(&amp;mut v, 0, length - 1);
+#println!(&quot;sorted: {:?}&quot;, v);
+#assert_eq!(vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95], v);
+#}</code></pre></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload(true); // force reload from server (not from cache)
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>
