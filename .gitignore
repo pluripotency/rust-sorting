@@ -1,3 +1,4 @@
 .idea
+.criterion
 /target
 **/*.rs.bk

@@ -1,7 +1,16 @@
 [package]
-name = "rust-sorting"
+name = "rust_sorting"
 version = "0.1.0"
 authors = ["Masayoshi Kokuryo <masakoku@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+
+[dev-dependencies]
+rust_sorting = { path = "../rust-sorting" }
+criterion = "0.1.2"
+rand = "0.5.5"
+
+[[bench]]
+name = "my_benchmark"
+harness = false
