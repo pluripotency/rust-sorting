@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Sorting by Rust</title>
+        <title>Criterion Bench - Sorting by Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
+            <ol class="chapter"><li><a href="bench.html" class="active"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -183,172 +183,6 @@ quick                   time:   [119.24 us 119.51 us 119.84 us]
 2 (2.00%) high mild
   2 (2.00%) high severe
 </code></pre>
-<a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble Sort</h1></a>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use std::ops::BitXor;
-
-pub fn swap&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
-pub fn swap_by_xor&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-{
-    // XOR trick can be used only for numbers
-    array[from] = array[from] ^ array[to];
-    array[to] = array[from] ^ array[to];
-    array[from] = array[from] ^ array[to];
-
-pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-    U: Fn(T, T) -&gt; bool,
-{
-    let length = array.len();
-    for i in 0..(length - 1) {
-        for j in (i + 1)..length {
-            if comparator(array[j], array[i]) {
-                swap(array, i, j);
-            }
-        }
-    }
-}
-
-let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-bubble_sort(&amp;mut v, |a, b| a &lt; b);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#insertion-sort" id="insertion-sort"><h1>Insertion Sort</h1></a>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub fn insertion_sort&lt;T: Ord + Copy, U: Fn(&amp;T, &amp;T) -&gt; bool&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U) {
-    for i in 1..array.len() {
-        let num_to_insert = array[i];
-        let mut compare_index = i;
-        while (compare_index &gt; 0) &amp;&amp; comparator(&amp;num_to_insert, &amp;array[compare_index - 1]) {
-            array[compare_index] = array[compare_index - 1];
-            compare_index -= 1;
-        }
-        array[compare_index] = num_to_insert;
-    }
-}
-
-let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-insertion_sort(&amp;mut v, |a, b| a &lt; b);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#quick-sort" id="quick-sort"><h1>Quick Sort</h1></a>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-fn partition&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) -&gt; usize {
-    let len = v.len();
-    let pivot_index = len / 2;
- 
-    v.swap(pivot_index, len - 1);
- 
-    let mut store_index = 0;
-    for i in 0..len - 1 {
-        if &amp;v[i] &lt; &amp;v[len - 1] {
-            v.swap(i, store_index);
-            store_index += 1;
-        }
-    }
- 
-    v.swap(store_index, len - 1);
-    store_index
-}
-
-pub fn quick_sort&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) {
-    let len = v.len();
-    if len &gt;= 2 {
-        let pivot_index = partition(v);
-        quick_sort(&amp;mut v[0..pivot_index]);
-        quick_sort(&amp;mut v[pivot_index + 1..len]);
-    }
-}
-
-let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-quick_sort(&amp;mut v);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#merge-sort" id="merge-sort"><h1>Merge Sort</h1></a>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-fn merge&lt;T: Copy + PartialOrd&gt;(x1: &amp;[T], x2: &amp;[T], y: &amp;mut [T]) {
-    // assert_eq!(x1.len() + x2.len(), y.len());
-    let mut i = 0;
-    let mut j = 0;
-    let mut k = 0;
-    while i &lt; x1.len() &amp;&amp; j &lt; x2.len() {
-        if x1[i] &lt; x2[j] {
-            y[k] = x1[i];
-            k += 1;
-            i += 1;
-        } else {
-            y[k] = x2[j];
-            k += 1;
-            j += 1;
-        }
-    }
-    if i &lt; x1.len() {
-        y[k..].copy_from_slice(&amp;x1[i..]);
-    }
-    if j &lt; x2.len() {
-        y[k..].copy_from_slice(&amp;x2[j..]);
-    }
-}
-
-pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
-    let n = x.len();
-    let mut y = x.to_vec();
-    let mut len = 1;
-    while len &lt; n {
-        let mut i = 0;
-        while i &lt; n {
-            if i + len &gt;= n {
-                y[i..].copy_from_slice(&amp;x[i..]);
-            } else if i + 2 * len &gt; n {
-                merge(&amp;x[i..i+len], &amp;x[i+len..], &amp;mut y[i..]);				
-            } else {
-                merge(&amp;x[i..i+len], &amp;x[i+len..i+2*len], &amp;mut y[i..i+2*len]);
-            }
-            i += 2 * len;
-        }
-        len *= 2;
-        if len &gt;= n {
-            x.copy_from_slice(&amp;y);
-            return;
-        }
-        i = 0;
-        while i &lt; n {
-            if i + len &gt;= n {
-                x[i..].copy_from_slice(&amp;y[i..]);
-            } else if i + 2 * len &gt; n {
-                merge(&amp;y[i..i+len], &amp;y[i+len..], &amp;mut x[i..]);				
-            } else {
-                merge(&amp;y[i..i+len], &amp;y[i+len..i+2*len], &amp;mut x[i..i+2*len]);
-            }
-            i += 2 * len;
-        }
-        len *= 2;
-    }
-}
-
-let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
-#println!(&quot;before: {:?}&quot;, v);
-merge_sort(&amp;mut v);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95], v);
-#}</code></pre></pre>
 
                     </main>
 
@@ -356,6 +190,10 @@ merge_sort(&amp;mut v);
                         <!-- Mobile navigation buttons -->
                         
 
+                        
+                            <a rel="next" href="bubble.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -366,6 +204,10 @@ merge_sort(&amp;mut v);
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
 
+                
+                    <a href="bubble.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -405,14 +247,6 @@ merge_sort(&amp;mut v);
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>

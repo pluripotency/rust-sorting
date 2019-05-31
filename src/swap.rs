@@ -1,5 +1,6 @@
 use std::ops::BitXor;
 
+#[allow(dead_code)]
 pub fn swap_by_xor<T>(array: &mut Vec<T>, from: usize, to: usize)
 where
     T: Copy + BitXor<Output = T>,
@@ -10,6 +11,7 @@ where
     array[from] = array[from] ^ array[to];
 }
 
+#[allow(dead_code)]
 pub fn swap<T: Copy>(array: &mut Vec<T>, a: usize, b: usize) {
     let temp = array[a];
     array[a] = array[b];

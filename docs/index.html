@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Bubble Sort - Sorting by Rust</title>
+        <title>Criterion Bench - Sorting by Rust</title>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bubble.html"><strong aria-hidden="true">1.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">2.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">3.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">4.</strong> Merge Sort</a></li></ol>
+            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -136,43 +136,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble Sort</h1></a>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use std::ops::BitXor;
+                        <a class="header" href="#benchmark-with-criterion" id="benchmark-with-criterion"><h1>Benchmark with criterion</h1></a>
+<pre><code> Running target/release/deps/my_benchmark-90cd95d3bbcaed14
+ rust native merge sort  time:   [4.6193 us 4.6286 us 4.6373 us]
+                         change: [+4.7729% +5.4420% +6.0999%] (p = 0.00 &lt; 0.05)
+                      Performance has regressed.
 
-pub fn swap&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-{
-    // XOR trick can be used only for numbers
-    array[from] = array[from] ^ array[to];
-    array[to] = array[from] ^ array[to];
-    array[from] = array[from] ^ array[to];
-}
+                      rust native quick sort  time:   [4.1546 us 4.1717 us 4.1947 us]
+                                              change: [-4.2186% -3.2044% -1.8682%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 8 outliers among 100 measurements (8.00%)
+5 (5.00%) high mild
+  3 (3.00%) high severe
 
-pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-    U: Fn(T, T) -&gt; bool,
-{
-    let length = array.len();
-    for i in 0..(length - 1) {
-        for j in (i + 1)..length {
-            if comparator(array[j], array[i]) {
-                swap(array, i, j);
-            }
-        }
-    }
-}
+  merge no recurse        time:   [156.38 us 156.57 us 156.79 us]
+                          change: [-7.6287% -7.2171% -6.7943%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 8 outliers among 100 measurements (8.00%)
+5 (5.00%) high mild
+  3 (3.00%) high severe
 
-let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-bubble_sort(&amp;mut v, |a, b| a &lt; b);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
+  merge recurse           time:   [769.43 us 771.09 us 772.84 us]
+                          change: [-12.478% -11.985% -11.553%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 5 outliers among 100 measurements (5.00%)
+3 (3.00%) high mild
+  2 (2.00%) high severe
+
+  merge mine              time:   [1.6512 ms 1.6551 ms 1.6595 ms]
+                          change: [-15.967% -15.637% -15.308%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 4 outliers among 100 measurements (4.00%)
+4 (4.00%) high mild
+
+quick                   time:   [119.24 us 119.51 us 119.84 us]
+                        change: [-15.304% -14.916% -14.497%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 5 outliers among 100 measurements (5.00%)
+4 (4.00%) high mild
+  1 (1.00%) high severe
+
+  insertion               time:   [14.442 us 14.505 us 14.581 us]
+                          change: [-13.193% -12.349% -11.454%] (p = 0.00 &lt; 0.05)
+                      Performance has improved.
+                      Found 4 outliers among 100 measurements (4.00%)
+2 (2.00%) high mild
+  2 (2.00%) high severe
+</code></pre>
 
                     </main>
 
@@ -198,7 +208,7 @@ bubble_sort(&amp;mut v, |a, b| a &lt; b);
         
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
-            var socket = new WebSocket("ws://192.168.11.71:3001");
+            var socket = new WebSocket("ws://localhost:3001");
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();

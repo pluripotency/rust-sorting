@@ -1,7 +1,4 @@
-# rust-sorting
-Sorting Algorithm by Rust
-
-## Benchmark with criterion
+# Benchmark with criterion
 ```
  Running target/release/deps/my_benchmark-90cd95d3bbcaed14
  rust native merge sort  time:   [4.6193 us 4.6286 us 4.6373 us]
@@ -49,6 +46,3 @@ quick                   time:   [119.24 us 119.51 us 119.84 us]
 2 (2.00%) high mild
   2 (2.00%) high severe
 ```
-
-## Sandbox
-Let's try in [sandbox!](https://pluripotency.github.io/rust-sorting)

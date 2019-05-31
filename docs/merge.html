@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bubble.html"><strong aria-hidden="true">1.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">2.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">3.</strong> Quick Sort</a></li><li><a href="merge.html" class="active"><strong aria-hidden="true">4.</strong> Merge Sort</a></li></ol>
+            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html" class="active"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,67 +140,69 @@
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-fn append_smaller(v: &amp;mut Vec&lt;usize&gt;, array: &amp;mut Vec&lt;usize&gt;, a: usize, b: usize)-&gt; bool {
-    print!(&quot;{} ? {}  &quot;, array[a], array[b]);
-    if array[a] &lt;= array[b] {
-        println!(&quot;smaller is {}&quot;, array[a]);
-        v.push(array[a]);
-        true
-    } else {
-        println!(&quot;smaller is {}&quot;, array[b]);
-        v.push(array[b]);
-        false
-    }
-}
-fn append_rest(v: &amp;mut Vec&lt;usize&gt;, array: &amp;mut Vec&lt;usize&gt;, from: usize, to: usize) -&gt; usize {
-    for i in from..(to+1) {
-        print!(&quot;append {} &quot;, array[i]);
-        v.push(array[i]);
-    }
-    to
-}
-fn merge(array: &amp;mut Vec&lt;usize&gt;, left: usize, mid: usize, right: usize) {
-    let mut i = left;
-    let mut j = mid + 1;
-    let mut v: Vec&lt;usize&gt; = vec![];
-
-    while (i &lt;= mid) &amp;&amp; (j &lt;= right) {
-        i = left;
-        j = mid + 1;
-        while (i &lt;= mid) &amp;&amp; (j &lt;= right) {
-            match append_smaller(&amp;mut v, array, i, j) {
-                true =&gt; i += 1,
-                false =&gt; j +=1
-            }
-        }
-        if i == mid + 1 {
-            print!(&quot;after mid &quot;);
-            j = append_rest(&amp;mut v, array, j, right);
+fn merge&lt;T: Copy + PartialOrd&gt;(x1: &amp;[T], x2: &amp;[T], y: &amp;mut [T]) {
+    // assert_eq!(x1.len() + x2.len(), y.len());
+    let mut i = 0;
+    let mut j = 0;
+    let mut k = 0;
+    while i &lt; x1.len() &amp;&amp; j &lt; x2.len() {
+        if x1[i] &lt; x2[j] {
+            y[k] = x1[i];
+            k += 1;
+            i += 1;
         } else {
-            print!(&quot;before mid &quot;);
-            i = append_rest(&amp;mut v, array, i, mid);
+            y[k] = x2[j];
+            k += 1;
+            j += 1;
         }
     }
-    for k in 0..v.len() {
-        array[k + left] = v[k];
+    if i &lt; x1.len() {
+        y[k..].copy_from_slice(&amp;x1[i..]);
     }
-    println!(&quot;\ncurrently: {:?}&quot;, array);
+    if j &lt; x2.len() {
+        y[k..].copy_from_slice(&amp;x2[j..]);
+    }
 }
 
-pub fn merge_sort(array: &amp;mut Vec&lt;usize&gt;, left: usize, right: usize) {
-    if left == right {
-        return;
+pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
+    let n = x.len();
+    let mut y = x.to_vec();
+    let mut len = 1;
+    while len &lt; n {
+        let mut i = 0;
+        while i &lt; n {
+            if i + len &gt;= n {
+                y[i..].copy_from_slice(&amp;x[i..]);
+            } else if i + 2 * len &gt; n {
+                merge(&amp;x[i..i+len], &amp;x[i+len..], &amp;mut y[i..]);				
+            } else {
+                merge(&amp;x[i..i+len], &amp;x[i+len..i+2*len], &amp;mut y[i..i+2*len]);
+            }
+            i += 2 * len;
+        }
+        len *= 2;
+        if len &gt;= n {
+            x.copy_from_slice(&amp;y);
+            return;
+        }
+        i = 0;
+        while i &lt; n {
+            if i + len &gt;= n {
+                x[i..].copy_from_slice(&amp;y[i..]);
+            } else if i + 2 * len &gt; n {
+                merge(&amp;y[i..i+len], &amp;y[i+len..], &amp;mut x[i..]);				
+            } else {
+                merge(&amp;y[i..i+len], &amp;y[i+len..i+2*len], &amp;mut x[i..i+2*len]);
+            }
+            i += 2 * len;
+        }
+        len *= 2;
     }
-    let mid = left / 2 + right / 2;
-    merge_sort(array, left, mid);
-    merge_sort(array, mid + 1, right);
-    merge(array, left, mid, right);
 }
 
 let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
 #println!(&quot;before: {:?}&quot;, v);
-let length = v.len();
-merge_sort(&amp;mut v, 0, length - 1);
+merge_sort(&amp;mut v);
 #println!(&quot;sorted: {:?}&quot;, v);
 #assert_eq!(vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95], v);
 #}</code></pre></pre>
@@ -237,7 +239,7 @@ merge_sort(&amp;mut v, 0, length - 1);
         
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
-            var socket = new WebSocket("ws://192.168.11.71:3001");
+            var socket = new WebSocket("ws://localhost:3001");
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();

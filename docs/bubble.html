@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bubble.html" class="active"><strong aria-hidden="true">1.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">2.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">3.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">4.</strong> Merge Sort</a></li></ol>
+            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html" class="active"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -143,6 +143,7 @@
 use std::ops::BitXor;
 
 pub fn swap&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
+pub fn swap_by_xor&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
 where
     T: Copy + BitXor&lt;Output = T&gt;,
 {
@@ -150,7 +151,6 @@ where
     array[from] = array[from] ^ array[to];
     array[to] = array[from] ^ array[to];
     array[from] = array[from] ^ array[to];
-}
 
 pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
 where
@@ -179,6 +179,10 @@ bubble_sort(&amp;mut v, |a, b| a &lt; b);
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="bench.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
                             <a rel="next" href="insertion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
@@ -193,6 +197,10 @@ bubble_sort(&amp;mut v, |a, b| a &lt; b);
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="bench.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
                     <a href="insertion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
@@ -206,7 +214,7 @@ bubble_sort(&amp;mut v, |a, b| a &lt; b);
         
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
-            var socket = new WebSocket("ws://192.168.11.71:3001");
+            var socket = new WebSocket("ws://localhost:3001");
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();

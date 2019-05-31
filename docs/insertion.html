@@ -72,7 +72,7 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bubble.html"><strong aria-hidden="true">1.</strong> Bubble Sort</a></li><li><a href="insertion.html" class="active"><strong aria-hidden="true">2.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">3.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">4.</strong> Merge Sort</a></li></ol>
+            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html" class="active"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
@@ -140,11 +140,11 @@
 <pre><pre class="playpen"><code class="language-rust">
 # #![allow(unused_variables)]
 #fn main() {
-pub fn insertion_sort&lt;T: Ord + Copy, U: Fn(T, T) -&gt; bool&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U) {
+pub fn insertion_sort&lt;T: Ord + Copy, U: Fn(&amp;T, &amp;T) -&gt; bool&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U) {
     for i in 1..array.len() {
         let num_to_insert = array[i];
         let mut compare_index = i;
-        while (compare_index &gt; 0) &amp;&amp; comparator(num_to_insert, array[compare_index - 1]) {
+        while (compare_index &gt; 0) &amp;&amp; comparator(&amp;num_to_insert, &amp;array[compare_index - 1]) {
             array[compare_index] = array[compare_index - 1];
             compare_index -= 1;
         }
@@ -199,7 +199,7 @@ insertion_sort(&amp;mut v, |a, b| a &lt; b);
         
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
-            var socket = new WebSocket("ws://192.168.11.71:3001");
+            var socket = new WebSocket("ws://localhost:3001");
             socket.onmessage = function (event) {
                 if (event.data === "reload") {
                     socket.close();
