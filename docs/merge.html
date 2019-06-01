@@ -141,7 +141,6 @@
 # #![allow(unused_variables)]
 #fn main() {
 fn merge&lt;T: Copy + PartialOrd&gt;(x1: &amp;[T], x2: &amp;[T], y: &amp;mut [T]) {
-    // assert_eq!(x1.len() + x2.len(), y.len());
     let mut i = 0;
     let mut j = 0;
     let mut k = 0;
@@ -174,9 +173,13 @@ pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
             if i + len &gt;= n {
                 y[i..].copy_from_slice(&amp;x[i..]);
             } else if i + 2 * len &gt; n {
-                merge(&amp;x[i..i+len], &amp;x[i+len..], &amp;mut y[i..]);				
+                merge(&amp;x[i..i + len], &amp;x[i + len..], &amp;mut y[i..]);
             } else {
-                merge(&amp;x[i..i+len], &amp;x[i+len..i+2*len], &amp;mut y[i..i+2*len]);
+                merge(
+                    &amp;x[i..i + len],
+                    &amp;x[i + len..i + 2 * len],
+                    &amp;mut y[i..i + 2 * len],
+                );
             }
             i += 2 * len;
         }
@@ -190,15 +193,12 @@ pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
             if i + len &gt;= n {
                 x[i..].copy_from_slice(&amp;y[i..]);
             } else if i + 2 * len &gt; n {
-                merge(&amp;y[i..i+len], &amp;y[i+len..], &amp;mut x[i..]);				
+                merge(&amp;y[i..i + len], &amp;y[i + len..], &amp;mut x[i..]);
             } else {
-                merge(&amp;y[i..i+len], &amp;y[i+len..i+2*len], &amp;mut x[i..i+2*len]);
-            }
-            i += 2 * len;
-        }
-        len *= 2;
-    }
-}
+                merge(
+                    &amp;y[i..i + len],
+                    &amp;y[i + len..i + 2 * len],
+                    &amp;mut x[i..i + 2 * len],
 
 let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
 #println!(&quot;before: {:?}&quot;, v);
@@ -236,21 +236,6 @@ merge_sort(&amp;mut v);
 
         </div>
 
-        
-        <!-- Livereload script (if served using the cli tool) -->
-        <script type="text/javascript">
-            var socket = new WebSocket("ws://localhost:3001");
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload(true); // force reload from server (not from cache)
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
         
 
         
