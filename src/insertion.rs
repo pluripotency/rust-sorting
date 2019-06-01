@@ -1,4 +1,7 @@
-pub fn insertion_sort<T: Copy + PartialOrd, F: Fn(&T, &T) -> bool>(array: &mut [T], comparator: &F) {
+pub fn insertion_sort<T: Copy + PartialOrd, F: Fn(&T, &T) -> bool>(
+    array: &mut [T],
+    comparator: &F,
+) {
     for i in 1..array.len() {
         let num_to_insert = array[i];
         let mut compare_index = i;

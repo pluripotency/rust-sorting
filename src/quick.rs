@@ -1,9 +1,9 @@
 fn partition<T: Copy + PartialOrd>(v: &mut [T]) -> usize {
     let len = v.len();
     let pivot_index = len / 2;
- 
+
     v.swap(pivot_index, len - 1);
- 
+
     let mut store_index = 0;
     for i in 0..len - 1 {
         if &v[i] < &v[len - 1] {
@@ -11,7 +11,7 @@ fn partition<T: Copy + PartialOrd>(v: &mut [T]) -> usize {
             store_index += 1;
         }
     }
- 
+
     v.swap(store_index, len - 1);
     store_index
 }
@@ -24,7 +24,7 @@ pub fn quick_sort<T: Copy + PartialOrd>(v: &mut [T]) {
         quick_sort(&mut v[pivot_index + 1..len]);
     }
 }
- 
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -38,9 +38,9 @@ mod tests {
     #[test]
     fn test_large_quick_sort() {
         use rand::Rng;
-        let test_data: Vec<usize> = (0..100).map(|_| {
-            rand::thread_rng().gen_range(1, std::usize::MAX)
-        }).collect();
+        let test_data: Vec<usize> = (0..100)
+            .map(|_| rand::thread_rng().gen_range(1, std::usize::MAX))
+            .collect();
         let mut v = test_data.clone();
         quick_sort(&mut v);
         println!("{:?}", v);

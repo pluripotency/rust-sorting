@@ -1,12 +1,12 @@
 use crate::swap::swap;
 
-fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> usize{
+fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> usize {
     let mut mid = i + 1;
     while mid <= j {
         if array[i] < array[mid] {
-            return mid
+            return mid;
         } else if array[i] > array[mid] {
-            return i
+            return i;
         }
         mid += 1;
     }
@@ -16,7 +16,7 @@ fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> usize{
 // fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> Option<usize>{
 //     let mid = i / 2 + j / 2;// avoid (i+j:overflow)/2
 //     let x = array[i];
-//     let y = array[mid]; 
+//     let y = array[mid];
 //     let z = array[j];
 //     if x < y {
 //         if y < z {
@@ -42,7 +42,7 @@ fn pivot<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) -> usize{
 fn partition<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize, p: T) -> usize {
     let mut left = i.clone();
     let mut right = j.clone();
-    while left<= right {
+    while left <= right {
         while (left <= j) && (array[left] < p) {
             left += 1;
         }
@@ -60,7 +60,9 @@ fn partition<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize, p: T) -> usi
 }
 
 pub fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
-    if i==j { return }
+    if i == j {
+        return;
+    }
     // let p_index = pivot(array, i, j);
     // let k = partition(array, i, j, array[p_index]);
     // quick_sort(array, i, k - 1);
@@ -71,7 +73,7 @@ pub fn quick_sort<T: Ord + Copy>(array: &mut Vec<T>, i: usize, j: usize) {
             quick_sort(array, i, k - 1);
             quick_sort(array, k, j);
         }
-        None => println!("worst")
+        None => println!("worst"),
     }
 }
 
@@ -90,10 +92,12 @@ mod tests {
     #[test]
     fn test_large_quick_sort() {
         use rand::Rng;
-        let test_data: Vec<usize> = (0..100).map(|_| {
-            rand::thread_rng().gen_range(1, 10000)
-            // rand::thread_rng().gen_range(1, std::usize::MAX)
-        }).collect();
+        let test_data: Vec<usize> = (0..100)
+            .map(|_| {
+                rand::thread_rng().gen_range(1, 10000)
+                // rand::thread_rng().gen_range(1, std::usize::MAX)
+            })
+            .collect();
         let mut v = test_data.clone();
         let length = v.len();
         quick_sort(&mut v, 0, length - 1);

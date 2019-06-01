@@ -1,4 +1,4 @@
-fn append_smaller(v: &mut Vec<usize>, array: &mut Vec<usize>, a: usize, b: usize)-> bool {
+fn append_smaller(v: &mut Vec<usize>, array: &mut Vec<usize>, a: usize, b: usize) -> bool {
     print!("{} ? {}  ", array[a], array[b]);
     if array[a] <= array[b] {
         println!("smaller is {}", array[a]);
@@ -11,7 +11,7 @@ fn append_smaller(v: &mut Vec<usize>, array: &mut Vec<usize>, a: usize, b: usize
     }
 }
 fn append_rest(v: &mut Vec<usize>, array: &mut Vec<usize>, from: usize, to: usize) -> usize {
-    for i in from..(to+1) {
+    for i in from..(to + 1) {
         print!("append {} ", array[i]);
         v.push(array[i]);
     }
@@ -28,7 +28,7 @@ fn merge(array: &mut Vec<usize>, left: usize, mid: usize, right: usize) {
         while (i <= mid) && (j <= right) {
             match append_smaller(&mut v, array, i, j) {
                 true => i += 1,
-                false => j +=1
+                false => j += 1,
             }
         }
         if i == mid + 1 {
@@ -58,15 +58,15 @@ pub fn merge_sort(array: &mut Vec<usize>, left: usize, right: usize) {
 #[cfg(test)]
 mod tests {
     use super::*;
-//    #[test]
-//    fn test_merge_sort_small() {
-//        let test_data = vec![81, 20, 13, 32, 62, 54, 8];
-//        let test_answer = vec![8, 13, 20, 32, 54, 62, 81];
-//        let mut v = test_data.clone();
-//        let length = v.len();
-//        merge_sort(&mut v, 0, length - 1);
-//        assert_eq!(test_answer, v);
-//    }
+    //    #[test]
+    //    fn test_merge_sort_small() {
+    //        let test_data = vec![81, 20, 13, 32, 62, 54, 8];
+    //        let test_answer = vec![8, 13, 20, 32, 54, 62, 81];
+    //        let mut v = test_data.clone();
+    //        let length = v.len();
+    //        merge_sort(&mut v, 0, length - 1);
+    //        assert_eq!(test_answer, v);
+    //    }
     #[test]
     fn test_merge_sort() {
         let test_data = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];

@@ -82,10 +82,12 @@ mod tests {
     #[test]
     fn test_large_quick_sort() {
         use rand::Rng;
-        let test_data: Vec<usize> = (0..100).map(|_| {
-            rand::thread_rng().gen_range(1, 10000)
-            // rand::thread_rng().gen_range(1, std::usize::MAX)
-        }).collect();
+        let test_data: Vec<usize> = (0..100)
+            .map(|_| {
+                rand::thread_rng().gen_range(1, 10000)
+                // rand::thread_rng().gen_range(1, std::usize::MAX)
+            })
+            .collect();
         let mut v = test_data.clone();
         let length = v.len();
         quick_sort(&mut v, 0, length - 1, 1);
