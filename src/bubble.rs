@@ -1,16 +1,13 @@
-use crate::swap::swap_by_xor as swap;
-use std::ops::BitXor;
-
 pub fn bubble_sort<T, U>(array: &mut Vec<T>, comparator: U)
-where
-    T: Copy + BitXor<Output = T>,
-    U: Fn(T, T) -> bool,
+    where
+        T: PartialOrd,
+        U: Fn(&T, &T) -> bool,
 {
     let length = array.len();
     for i in 0..(length - 1) {
         for j in (i + 1)..length {
-            if comparator(array[j], array[i]) {
-                swap(array, i, j);
+            if comparator(&array[j], &array[i]) {
+                array.swap(i, j);
             }
         }
     }
@@ -22,7 +19,7 @@ mod tests {
 
     #[test]
     fn test_bubble_sort() {
-        fn order_ascend<T: Ord>(a: T, b: T) -> bool {
+        fn order_ascend<T: PartialOrd>(a: &T, b: &T) -> bool {
             a < b
         }
         let mut v = vec![20, 12, 45, 19, 91, 55];
@@ -42,7 +39,7 @@ mod tests {
     // cargo test -- --nocapture
     fn test_bubble_sort_using_output_comparator() {
         use std::fmt::{Debug, Display};
-        fn order_ascend<T: Ord + Display>(a: T, b: T) -> bool {
+        fn order_ascend<T: PartialOrd + Display>(a: &T, b: &T) -> bool {
             println!("test: {} < {}", a, b);
             a < b
         }

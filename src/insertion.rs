@@ -1,15 +1,16 @@
-pub fn insertion_sort<T: Copy + PartialOrd, F: Fn(&T, &T) -> bool>(
-    array: &mut [T],
-    comparator: &F,
-) {
+pub fn insertion_sort<T, F>(array: &mut [T], comparator: &F)
+    where
+        T: Copy + PartialOrd,
+        F: Fn(&T, &T) -> bool,
+{
     for i in 1..array.len() {
         let num_to_insert = array[i];
-        let mut compare_index = i;
-        while compare_index > 0 && comparator(&num_to_insert, &array[compare_index - 1]) {
-            array[compare_index] = array[compare_index - 1];
-            compare_index -= 1;
+        let mut index = i;
+        while index > 0 && comparator(&num_to_insert, &array[index - 1]) {
+            array[index] = array[index - 1];
+            index -= 1;
         }
-        array[compare_index] = num_to_insert;
+        array[index] = num_to_insert;
     }
 }
 

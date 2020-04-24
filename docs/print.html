@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Sorting by Rust</title>
+        
+        <meta name="robots" content="noindex" />
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,9 +34,12 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -53,10 +60,13 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -72,43 +82,46 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li class="chapter-item expanded "><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li class="chapter-item expanded "><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li class="chapter-item expanded "><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li class="chapter-item expanded "><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Sorting by Rust</h1> 
+                    <h1 class="menu-title">Sorting by Rust</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -136,117 +149,125 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#benchmark-with-criterion" id="benchmark-with-criterion"><h1>Benchmark with criterion</h1></a>
-<pre><code>     Running target/release/deps/my_benchmark-90cd95d3bbcaed14
-rust native merge sort  time:   [4.5550 us 4.5661 us 4.5758 us]                                       
-                        change: [+13.481% +13.929% +14.343%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 1 outliers among 100 measurements (1.00%)
-  1 (1.00%) high mild
-
-rust native quick sort  time:   [6.1192 us 6.1255 us 6.1335 us]                                      
-                        change: [+10.848% +11.156% +11.452%] (p = 0.00 &lt; 0.05)
+                        <h1><a class="header" href="#benchmark-with-criterion" id="benchmark-with-criterion">Benchmark with criterion</a></h1>
+<pre><code>     Running target/release/deps/my_benchmark-f084cbf0dc74af64
+Gnuplot not found, disabling plotting
+rust native merge sort  time:   [4.9806 us 5.0106 us 5.0521 us]                                      
+                        change: [+56.030% +57.424% +59.041%] (p = 0.00 &lt; 0.05)
                         Performance has regressed.
 Found 17 outliers among 100 measurements (17.00%)
-  2 (2.00%) low severe
-  8 (8.00%) low mild
+  1 (1.00%) high mild
+  16 (16.00%) high severe
+
+rust native quick sort  time:   [3.0379 us 3.0461 us 3.0565 us]                                       
+                        change: [-1.0776% -0.4913% +0.2367%] (p = 0.15 &gt; 0.05)
+                        No change in performance detected.
+Found 13 outliers among 100 measurements (13.00%)
   4 (4.00%) high mild
+  9 (9.00%) high severe
+
+merge no recurse        time:   [100.96 us 101.28 us 101.68 us]                               
+                        change: [-8.2138% -5.8903% -3.8256%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 5 outliers among 100 measurements (5.00%)
+  2 (2.00%) high mild
   3 (3.00%) high severe
 
-merge no recurse        time:   [166.88 us 167.14 us 167.43 us]                               
-                        change: [+11.114% +11.482% +11.865%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 2 outliers among 100 measurements (2.00%)
-  2 (2.00%) high severe
+merge recurse           time:   [580.18 us 581.25 us 582.65 us]                            
+                        change: [-1.4469% -1.2477% -1.0629%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+  3 (3.00%) high severe
 
-merge recurse           time:   [807.07 us 808.71 us 810.77 us]                            
-                        change: [+5.6297% +6.0602% +6.4663%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 12 outliers among 100 measurements (12.00%)
-  7 (7.00%) high mild
+merge mine              time:   [1.3029 ms 1.3055 ms 1.3089 ms]                        
+                        change: [-1.0443% -0.7673% -0.5089%] (p = 0.00 &lt; 0.05)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) high mild
   5 (5.00%) high severe
 
-merge mine              time:   [1.7124 ms 1.7144 ms 1.7169 ms]                        
-                        change: [-0.6588% -0.3253% +0.0222%] (p = 0.06 &gt; 0.05)
-                        No change in performance detected.
-
-quick                   time:   [127.85 us 128.08 us 128.33 us]                    
-                        change: [+4.6607% +4.9541% +5.2417%] (p = 0.00 &lt; 0.05)
+quick                   time:   [104.31 us 104.62 us 104.99 us]                    
+                        change: [+1.0788% +1.7427% +2.4585%] (p = 0.00 &lt; 0.05)
                         Performance has regressed.
+Found 10 outliers among 100 measurements (10.00%)
+  2 (2.00%) high mild
+  8 (8.00%) high severe
 
-insertion               time:   [11.086 us 11.108 us 11.131 us]                         
-                        change: [+9.4496% +10.173% +10.746%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 20 outliers among 100 measurements (20.00%)
-  3 (3.00%) low severe
-  6 (6.00%) low mild
+insertion               time:   [7.3088 us 7.3337 us 7.3663 us]                         
+                        change: [-25.922% -25.379% -24.888%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 11 outliers among 100 measurements (11.00%)
+  2 (2.00%) high mild
+  9 (9.00%) high severe
+
+bubble                  time:   [28.188 ms 28.213 ms 28.241 ms]                    
+                        change: [+0.1515% +0.3523% +0.5543%] (p = 0.00 &lt; 0.05)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  1 (1.00%) low mild
   3 (3.00%) high mild
-  8 (8.00%) high severe  
+  3 (3.00%) high severe
 </code></pre>
-<a class="header" href="#bubble-sort" id="bubble-sort"><h1>Bubble Sort</h1></a>
+<h1><a class="header" href="#bubble-sort" id="bubble-sort">Bubble Sort</a></h1>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-use std::ops::BitXor;
-
-pub fn swap&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
-pub fn swap_by_xor&lt;T&gt;(array: &amp;mut Vec&lt;T&gt;, from: usize, to: usize)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-{
-    // XOR trick can be used only for numbers
-    array[from] = array[from] ^ array[to];
-    array[to] = array[from] ^ array[to];
-    array[from] = array[from] ^ array[to];
-
-pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
-where
-    T: Copy + BitXor&lt;Output = T&gt;,
-    U: Fn(T, T) -&gt; bool,
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub fn bubble_sort&lt;T, U&gt;(array: &amp;mut Vec&lt;T&gt;, comparator: U)
+    where
+        T: PartialOrd,
+        U: Fn(&amp;T, &amp;T) -&gt; bool,
 {
     let length = array.len();
     for i in 0..(length - 1) {
         for j in (i + 1)..length {
-            if comparator(array[j], array[i]) {
-                swap(array, i, j);
+            if comparator(&amp;array[j], &amp;array[i]) {
+                array.swap(i, j);
             }
         }
     }
 }
 
 let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-bubble_sort(&amp;mut v, |a, b| a &lt; b);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#insertion-sort" id="insertion-sort"><h1>Insertion Sort</h1></a>
+<span class="boring">println!(&quot;before: {:?}&quot;, v);
+</span>bubble_sort(&amp;mut v, |a, b| a &lt; b);
+<span class="boring">println!(&quot;sorted: {:?}&quot;, v);
+</span><span class="boring">assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+</span><span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#insertion-sort" id="insertion-sort">Insertion Sort</a></h1>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-pub fn insertion_sort&lt;T: Copy + PartialOrd, F: Fn(&amp;T, &amp;T) -&gt; bool&gt;(
-    array: &amp;mut [T],
-    comparator: &amp;F,
-) {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>pub fn insertion_sort&lt;T, F&gt;(array: &amp;mut [T], comparator: &amp;F)
+    where
+        T: Copy + PartialOrd,
+        F: Fn(&amp;T, &amp;T) -&gt; bool,
+{
     for i in 1..array.len() {
         let num_to_insert = array[i];
-        let mut compare_index = i;
-        while compare_index &gt; 0 &amp;&amp; comparator(&amp;num_to_insert, &amp;array[compare_index - 1]) {
-            array[compare_index] = array[compare_index - 1];
-            compare_index -= 1;
+        let mut index = i;
+        while index &gt; 0 &amp;&amp; comparator(&amp;num_to_insert, &amp;array[index - 1]) {
+            array[index] = array[index - 1];
+            index -= 1;
         }
+        array[index] = num_to_insert;
+    }
+}
 
 let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-insertion_sort(&amp;mut v, |a, b| a &lt; b);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#quick-sort" id="quick-sort"><h1>Quick Sort</h1></a>
+<span class="boring">println!(&quot;before: {:?}&quot;, v);
+</span>insertion_sort(&amp;mut v, &amp;|a, b| a &lt; b);
+<span class="boring">println!(&quot;sorted: {:?}&quot;, v);
+</span><span class="boring">assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+</span><span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#quick-sort" id="quick-sort">Quick Sort</a></h1>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-fn partition&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) -&gt; usize {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>fn partition&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) -&gt; usize {
     let len = v.len();
     let pivot_index = len / 2;
 
@@ -274,16 +295,17 @@ pub fn quick_sort&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) {
 }
 
 let mut v = vec![20, 12, 45, 19, 91, 55];
-#println!(&quot;before: {:?}&quot;, v);
-quick_sort(&amp;mut v);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-#}</code></pre></pre>
-<a class="header" href="#merge-sort" id="merge-sort"><h1>Merge Sort</h1></a>
+<span class="boring">println!(&quot;before: {:?}&quot;, v);
+</span>quick_sort(&amp;mut v);
+<span class="boring">println!(&quot;sorted: {:?}&quot;, v);
+</span><span class="boring">assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+</span><span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#merge-sort" id="merge-sort">Merge Sort</a></h1>
 <pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-fn merge&lt;T: Copy + PartialOrd&gt;(x1: &amp;[T], x2: &amp;[T], y: &amp;mut [T]) {
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>fn merge&lt;T: Copy + PartialOrd&gt;(x1: &amp;[T], x2: &amp;[T], y: &amp;mut [T]) {
     let mut i = 0;
     let mut j = 0;
     let mut k = 0;
@@ -342,13 +364,22 @@ pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
                     &amp;y[i..i + len],
                     &amp;y[i + len..i + 2 * len],
                     &amp;mut x[i..i + 2 * len],
+                );
+            }
+            i += 2 * len;
+        }
+        len *= 2;
+    }
+}
+
 
 let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
-#println!(&quot;before: {:?}&quot;, v);
-merge_sort(&amp;mut v);
-#println!(&quot;sorted: {:?}&quot;, v);
-#assert_eq!(vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95], v);
-#}</code></pre></pre>
+<span class="boring">println!(&quot;before: {:?}&quot;, v);
+</span>merge_sort(&amp;mut v);
+<span class="boring">println!(&quot;sorted: {:?}&quot;, v);
+</span><span class="boring">assert_eq!(vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95], v);
+</span><span class="boring">}
+</span></code></pre></pre>
 
                     </main>
 
@@ -372,7 +403,30 @@ merge_sort(&amp;mut v);
         </div>
 
         
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
 
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         

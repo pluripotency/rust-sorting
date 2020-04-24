@@ -1,48 +1,62 @@
 # Benchmark with criterion
 ```
-     Running target/release/deps/my_benchmark-90cd95d3bbcaed14
-rust native merge sort  time:   [4.5550 us 4.5661 us 4.5758 us]                                       
-                        change: [+13.481% +13.929% +14.343%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Found 1 outliers among 100 measurements (1.00%)
-  1 (1.00%) high mild
-
-rust native quick sort  time:   [6.1192 us 6.1255 us 6.1335 us]                                      
-                        change: [+10.848% +11.156% +11.452%] (p = 0.00 < 0.05)
+     Running target/release/deps/my_benchmark-f084cbf0dc74af64
+Gnuplot not found, disabling plotting
+rust native merge sort  time:   [4.9806 us 5.0106 us 5.0521 us]                                      
+                        change: [+56.030% +57.424% +59.041%] (p = 0.00 < 0.05)
                         Performance has regressed.
 Found 17 outliers among 100 measurements (17.00%)
-  2 (2.00%) low severe
-  8 (8.00%) low mild
+  1 (1.00%) high mild
+  16 (16.00%) high severe
+
+rust native quick sort  time:   [3.0379 us 3.0461 us 3.0565 us]                                       
+                        change: [-1.0776% -0.4913% +0.2367%] (p = 0.15 > 0.05)
+                        No change in performance detected.
+Found 13 outliers among 100 measurements (13.00%)
   4 (4.00%) high mild
+  9 (9.00%) high severe
+
+merge no recurse        time:   [100.96 us 101.28 us 101.68 us]                               
+                        change: [-8.2138% -5.8903% -3.8256%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 5 outliers among 100 measurements (5.00%)
+  2 (2.00%) high mild
   3 (3.00%) high severe
 
-merge no recurse        time:   [166.88 us 167.14 us 167.43 us]                               
-                        change: [+11.114% +11.482% +11.865%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Found 2 outliers among 100 measurements (2.00%)
-  2 (2.00%) high severe
+merge recurse           time:   [580.18 us 581.25 us 582.65 us]                            
+                        change: [-1.4469% -1.2477% -1.0629%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+  3 (3.00%) high severe
 
-merge recurse           time:   [807.07 us 808.71 us 810.77 us]                            
-                        change: [+5.6297% +6.0602% +6.4663%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Found 12 outliers among 100 measurements (12.00%)
-  7 (7.00%) high mild
+merge mine              time:   [1.3029 ms 1.3055 ms 1.3089 ms]                        
+                        change: [-1.0443% -0.7673% -0.5089%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) high mild
   5 (5.00%) high severe
 
-merge mine              time:   [1.7124 ms 1.7144 ms 1.7169 ms]                        
-                        change: [-0.6588% -0.3253% +0.0222%] (p = 0.06 > 0.05)
-                        No change in performance detected.
-
-quick                   time:   [127.85 us 128.08 us 128.33 us]                    
-                        change: [+4.6607% +4.9541% +5.2417%] (p = 0.00 < 0.05)
+quick                   time:   [104.31 us 104.62 us 104.99 us]                    
+                        change: [+1.0788% +1.7427% +2.4585%] (p = 0.00 < 0.05)
                         Performance has regressed.
+Found 10 outliers among 100 measurements (10.00%)
+  2 (2.00%) high mild
+  8 (8.00%) high severe
 
-insertion               time:   [11.086 us 11.108 us 11.131 us]                         
-                        change: [+9.4496% +10.173% +10.746%] (p = 0.00 < 0.05)
-                        Performance has regressed.
-Found 20 outliers among 100 measurements (20.00%)
-  3 (3.00%) low severe
-  6 (6.00%) low mild
+insertion               time:   [7.3088 us 7.3337 us 7.3663 us]                         
+                        change: [-25.922% -25.379% -24.888%] (p = 0.00 < 0.05)
+                        Performance has improved.
+Found 11 outliers among 100 measurements (11.00%)
+  2 (2.00%) high mild
+  9 (9.00%) high severe
+
+bubble                  time:   [28.188 ms 28.213 ms 28.241 ms]                    
+                        change: [+0.1515% +0.3523% +0.5543%] (p = 0.00 < 0.05)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  1 (1.00%) low mild
   3 (3.00%) high mild
-  8 (8.00%) high severe  
+  3 (3.00%) high severe
 ```

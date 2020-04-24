@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Criterion Bench - Sorting by Rust</title>
+        
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,9 +32,12 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">var path_to_root = "";</script>
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script type="text/javascript">
@@ -53,10 +58,13 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
-            if (theme === null || theme === undefined) { theme = 'light'; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -72,43 +80,46 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="bench.html"><strong aria-hidden="true">1.</strong> Criterion Bench</a></li><li class="chapter-item expanded "><a href="bubble.html"><strong aria-hidden="true">2.</strong> Bubble Sort</a></li><li class="chapter-item expanded "><a href="insertion.html"><strong aria-hidden="true">3.</strong> Insertion Sort</a></li><li class="chapter-item expanded "><a href="quick.html"><strong aria-hidden="true">4.</strong> Quick Sort</a></li><li class="chapter-item expanded "><a href="merge.html"><strong aria-hidden="true">5.</strong> Merge Sort</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light <span class="default">(default)</span></button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">Sorting by Rust</h1> 
+                    <h1 class="menu-title">Sorting by Rust</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                        </div>
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
                     </div>
                 </div>
 
@@ -136,52 +147,66 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#benchmark-with-criterion" id="benchmark-with-criterion"><h1>Benchmark with criterion</h1></a>
-<pre><code>     Running target/release/deps/my_benchmark-90cd95d3bbcaed14
-rust native merge sort  time:   [4.5550 us 4.5661 us 4.5758 us]                                       
-                        change: [+13.481% +13.929% +14.343%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 1 outliers among 100 measurements (1.00%)
-  1 (1.00%) high mild
-
-rust native quick sort  time:   [6.1192 us 6.1255 us 6.1335 us]                                      
-                        change: [+10.848% +11.156% +11.452%] (p = 0.00 &lt; 0.05)
+                        <h1><a class="header" href="#benchmark-with-criterion" id="benchmark-with-criterion">Benchmark with criterion</a></h1>
+<pre><code>     Running target/release/deps/my_benchmark-f084cbf0dc74af64
+Gnuplot not found, disabling plotting
+rust native merge sort  time:   [4.9806 us 5.0106 us 5.0521 us]                                      
+                        change: [+56.030% +57.424% +59.041%] (p = 0.00 &lt; 0.05)
                         Performance has regressed.
 Found 17 outliers among 100 measurements (17.00%)
-  2 (2.00%) low severe
-  8 (8.00%) low mild
+  1 (1.00%) high mild
+  16 (16.00%) high severe
+
+rust native quick sort  time:   [3.0379 us 3.0461 us 3.0565 us]                                       
+                        change: [-1.0776% -0.4913% +0.2367%] (p = 0.15 &gt; 0.05)
+                        No change in performance detected.
+Found 13 outliers among 100 measurements (13.00%)
   4 (4.00%) high mild
+  9 (9.00%) high severe
+
+merge no recurse        time:   [100.96 us 101.28 us 101.68 us]                               
+                        change: [-8.2138% -5.8903% -3.8256%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 5 outliers among 100 measurements (5.00%)
+  2 (2.00%) high mild
   3 (3.00%) high severe
 
-merge no recurse        time:   [166.88 us 167.14 us 167.43 us]                               
-                        change: [+11.114% +11.482% +11.865%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 2 outliers among 100 measurements (2.00%)
-  2 (2.00%) high severe
+merge recurse           time:   [580.18 us 581.25 us 582.65 us]                            
+                        change: [-1.4469% -1.2477% -1.0629%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+  3 (3.00%) high severe
 
-merge recurse           time:   [807.07 us 808.71 us 810.77 us]                            
-                        change: [+5.6297% +6.0602% +6.4663%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 12 outliers among 100 measurements (12.00%)
-  7 (7.00%) high mild
+merge mine              time:   [1.3029 ms 1.3055 ms 1.3089 ms]                        
+                        change: [-1.0443% -0.7673% -0.5089%] (p = 0.00 &lt; 0.05)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  1 (1.00%) high mild
   5 (5.00%) high severe
 
-merge mine              time:   [1.7124 ms 1.7144 ms 1.7169 ms]                        
-                        change: [-0.6588% -0.3253% +0.0222%] (p = 0.06 &gt; 0.05)
-                        No change in performance detected.
-
-quick                   time:   [127.85 us 128.08 us 128.33 us]                    
-                        change: [+4.6607% +4.9541% +5.2417%] (p = 0.00 &lt; 0.05)
+quick                   time:   [104.31 us 104.62 us 104.99 us]                    
+                        change: [+1.0788% +1.7427% +2.4585%] (p = 0.00 &lt; 0.05)
                         Performance has regressed.
+Found 10 outliers among 100 measurements (10.00%)
+  2 (2.00%) high mild
+  8 (8.00%) high severe
 
-insertion               time:   [11.086 us 11.108 us 11.131 us]                         
-                        change: [+9.4496% +10.173% +10.746%] (p = 0.00 &lt; 0.05)
-                        Performance has regressed.
-Found 20 outliers among 100 measurements (20.00%)
-  3 (3.00%) low severe
-  6 (6.00%) low mild
+insertion               time:   [7.3088 us 7.3337 us 7.3663 us]                         
+                        change: [-25.922% -25.379% -24.888%] (p = 0.00 &lt; 0.05)
+                        Performance has improved.
+Found 11 outliers among 100 measurements (11.00%)
+  2 (2.00%) high mild
+  9 (9.00%) high severe
+
+bubble                  time:   [28.188 ms 28.213 ms 28.241 ms]                    
+                        change: [+0.1515% +0.3523% +0.5543%] (p = 0.00 &lt; 0.05)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  1 (1.00%) low mild
   3 (3.00%) high mild
-  8 (8.00%) high severe  
+  3 (3.00%) high severe
 </code></pre>
 
                     </main>
@@ -190,6 +215,10 @@ Found 20 outliers among 100 measurements (20.00%)
                         <!-- Mobile navigation buttons -->
                         
 
+                        
+                            <a rel="next" href="bubble.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -201,12 +230,39 @@ Found 20 outliers among 100 measurements (20.00%)
                 
 
                 
+                    <a rel="next" href="bubble.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
             </nav>
 
         </div>
 
         
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3001");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
 
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
         
 
         
