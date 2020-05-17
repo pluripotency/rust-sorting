@@ -15,37 +15,36 @@ fn merge<T: Copy + PartialOrd>(x1: &[T], x2: &[T], y: &mut [T]) {
     }
     if i < x1.len() {
         y[k..].copy_from_slice(&x1[i..]);
-    }
-    if j < x2.len() {
+    }else if j < x2.len() {
         y[k..].copy_from_slice(&x2[j..]);
     }
 }
 
-pub fn merge_sort<T: Copy + Ord>(x: &mut [T]) {
-    let n = x.len();
-    let m = n / 2;
-
-    if n <= 1 {
+pub fn merge_sort<T: Copy + PartialOrd>(x: &mut [T]) {
+    let len = x.len();
+    if len <= 1 {
         return;
     }
+    let mid = len / 2;
 
-    merge_sort(&mut x[0..m]);
-    merge_sort(&mut x[m..n]);
+    merge_sort(&mut x[0..mid]);
+    merge_sort(&mut x[mid..len]);
 
     let mut y: Vec<T> = x.to_vec();
 
-    merge(&x[0..m], &x[m..n], &mut y[..]);
+    merge(&x[0..mid], &x[mid..len], &mut y[..]);
 
     x.copy_from_slice(&y);
 }
+
 
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
     fn test_merge_sort() {
-        let test_data = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
-        let test_answer = vec![3, 6, 8, 13, 19, 20, 23, 32, 48, 54, 62, 73, 81, 90, 95];
+        let test_data = vec![81.0, 20.0, 13.0, 32.0, 62.0, 54.0, 8.0, 95.0, 73.0, 19.0, 90.0, 23.0, 48.0, 6.0, 3.0];
+        let test_answer = vec![3.0, 6.0, 8.0, 13.0, 19.0, 20.0, 23.0, 32.0, 48.0, 54.0, 62.0, 73.0, 81.0, 90.0, 95.0];
         let mut v = test_data.clone();
         merge_sort(&mut v);
         assert_eq!(test_answer, v);

@@ -17,11 +17,12 @@ pub fn insertion_sort<T, F>(array: &mut [T], comparator: &F)
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
     fn test_insertion_sort() {
-        let mut v = vec![20, 12, 45, 19, 91, 55];
+        let test_data = vec![81.0, 20.0, 13.0, 32.0, 62.0, 54.0, 8.0, 95.0, 73.0, 19.0, 90.0, 23.0, 48.0, 6.0, 3.0];
+        let test_answer = vec![3.0, 6.0, 8.0, 13.0, 19.0, 20.0, 23.0, 32.0, 48.0, 54.0, 62.0, 73.0, 81.0, 90.0, 95.0];
+        let mut v = test_data.clone();
         insertion_sort(&mut v, &|a, b| a < b);
-        assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
+        assert_eq!(test_answer, v);
     }
 }

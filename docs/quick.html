@@ -174,9 +174,9 @@ pub fn quick_sort&lt;T: Copy + PartialOrd&gt;(v: &amp;mut [T]) {
     if len &gt;= 2 {
         let pivot_index = partition(v);
         quick_sort(&amp;mut v[0..pivot_index]);
-        quick_sort(&amp;mut v[pivot_index + 1..len]);
+        // quick_sort(&amp;mut v[pivot_index + 1..len]);
+        quick_sort(&amp;mut v[pivot_index..len]);
     }
-}
 
 let mut v = vec![20, 12, 45, 19, 91, 55];
 <span class="boring">println!(&quot;before: {:?}&quot;, v);
