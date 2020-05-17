@@ -51,7 +51,7 @@ pub fn merge_sort(array: &mut Vec<usize>, left: usize, right: usize) {
     }
     let mid = left / 2 + right / 2;
     merge_sort(array, left, mid);
-    merge_sort(array, mid + 1, right);
+    merge_sort(array, mid, right);
     merge(array, left, mid, right);
 }
 

@@ -26,29 +26,6 @@ pub fn quick_sort<T: Copy + PartialOrd>(v: &mut [T]) {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use super::*;
-//
-//     #[test]
-//     fn test_quick_sort() {
-//         let mut v = vec![20, 12, 45, 19, 91, 55];
-//         quick_sort(&mut v);
-//         assert_eq!(vec![12, 19, 20, 45, 55, 91], v)
-//     }
-//     #[test]
-//     fn test_large_quick_sort() {
-//         use rand::Rng;
-//         let test_data: Vec<usize> = (0..100)
-//             .map(|_| rand::thread_rng().gen_range(1, std::usize::MAX))
-//             .collect();
-//         let mut v = test_data.clone();
-//         quick_sort(&mut v);
-//         println!("{:?}", v);
-//     }
-//
-// }
-
 #[cfg(test)]
 mod tests {
     use super::*;

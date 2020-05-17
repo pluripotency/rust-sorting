@@ -4,7 +4,7 @@ extern crate rand;
 extern crate rust_sorting;
 use rand::Rng;
 use criterion::Criterion;
-use rust_sorting::{merge_no_recurse, merge_recurse, merge_tanin, quick, insertion, bubble};
+use rust_sorting::{merge_no_recurse_rosetta, merge_recurse_rosetta, merge_tanin, quick_rosetta, insertion, bubble};
 
 fn criterion_benchmark(c: &mut Criterion){
     let test_data: Vec<usize> = (0..10000).map(|_| {
@@ -15,10 +15,10 @@ fn criterion_benchmark(c: &mut Criterion){
     c.bench_function("rust native merge sort", |b| b.iter(|| v.sort()));
 
     let mut v = test_data.clone();
-    c.bench_function("merge no recurse", |b| b.iter(|| merge_no_recurse::merge_sort(&mut v)));
+    c.bench_function("merge no recurse", |b| b.iter(|| merge_no_recurse_rosetta::merge_sort(&mut v)));
 
     let mut v = test_data.clone();
-    c.bench_function("merge recurse", |b| b.iter(|| merge_recurse::merge_sort(&mut v)));
+    c.bench_function("merge recurse", |b| b.iter(|| merge_recurse_rosetta::merge_sort(&mut v)));
 
     let mut v = test_data.clone();
     c.bench_function("merge tanin", |b| b.iter(|| merge_tanin::sort(&mut v)));
@@ -27,7 +27,7 @@ fn criterion_benchmark(c: &mut Criterion){
     c.bench_function("rust native quick sort", |b| b.iter(|| v.sort_unstable()));
 
     let mut v = test_data.clone();
-    c.bench_function("quick", |b| b.iter(|| quick::quick_sort(&mut v)));
+    c.bench_function("quick", |b| b.iter(|| quick_rosetta::quick_sort(&mut v)));
 
     // let mut v = test_data.clone();
     // c.bench_function("quick_mine", |b| b.iter(|| quick_mine::quick_sort(&mut v, 0, v.len(), 1)));
