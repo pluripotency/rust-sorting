@@ -1,5 +1,8 @@
 pub mod bubble;
 pub mod insertion;
+pub mod insertion_native;
+pub mod merge_native;
+pub mod merge_insertion;
 pub mod merge_no_recurse_rosetta;
 pub mod merge_recurse_rosetta;
 pub mod merge_tanin;
