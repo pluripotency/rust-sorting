@@ -151,10 +151,10 @@
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
-</span>pub fn insertion_sort&lt;T, F&gt;(array: &amp;mut [T], comparator: &amp;F)
+</span>pub fn insertion_sort&lt;T, F&gt;(array: &amp;mut [T], mut comparator: F)
     where
         T: Copy + PartialOrd,
-        F: Fn(&amp;T, &amp;T) -&gt; bool,
+        F: FnMut(&amp;T, &amp;T) -&gt; bool,
 {
     for i in 1..array.len() {
         let num_to_insert = array[i];

@@ -5,7 +5,6 @@ pub mod merge_native;
 pub mod merge_insertion;
 pub mod merge_no_recurse_rosetta;
 pub mod merge_recurse_rosetta;
-pub mod merge_tanin;
 pub mod quick_rosetta;
 // pub mod quick_mine;
 mod swap;

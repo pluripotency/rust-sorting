@@ -168,56 +168,27 @@
     }
     if i &lt; x1.len() {
         y[k..].copy_from_slice(&amp;x1[i..]);
-    }
-    if j &lt; x2.len() {
+    }else if j &lt; x2.len() {
         y[k..].copy_from_slice(&amp;x2[j..]);
     }
 }
 
 pub fn merge_sort&lt;T: Copy + PartialOrd&gt;(x: &amp;mut [T]) {
-    let n = x.len();
-    let mut y = x.to_vec();
-    let mut len = 1;
-    while len &lt; n {
-        let mut i = 0;
-        while i &lt; n {
-            if i + len &gt;= n {
-                y[i..].copy_from_slice(&amp;x[i..]);
-            } else if i + 2 * len &gt; n {
-                merge(&amp;x[i..i + len], &amp;x[i + len..], &amp;mut y[i..]);
-            } else {
-                merge(
-                    &amp;x[i..i + len],
-                    &amp;x[i + len..i + 2 * len],
-                    &amp;mut y[i..i + 2 * len],
-                );
-            }
-            i += 2 * len;
-        }
-        len *= 2;
-        if len &gt;= n {
-            x.copy_from_slice(&amp;y);
-            return;
-        }
-        i = 0;
-        while i &lt; n {
-            if i + len &gt;= n {
-                x[i..].copy_from_slice(&amp;y[i..]);
-            } else if i + 2 * len &gt; n {
-                merge(&amp;y[i..i + len], &amp;y[i + len..], &amp;mut x[i..]);
-            } else {
-                merge(
-                    &amp;y[i..i + len],
-                    &amp;y[i + len..i + 2 * len],
-                    &amp;mut x[i..i + 2 * len],
-                );
-            }
-            i += 2 * len;
-        }
-        len *= 2;
+    let len = x.len();
+    if len &lt;= 1 {
+        return;
     }
-}
+    let mid = len / 2;
 
+    merge_sort(&amp;mut x[0..mid]);
+    merge_sort(&amp;mut x[mid..len]);
+
+    let mut y: Vec&lt;T&gt; = x.to_vec();
+
+    merge(&amp;x[0..mid], &amp;x[mid..len], &amp;mut y[..]);
+
+    x.copy_from_slice(&amp;y);
+}
 
 let mut v = vec![81, 20, 13, 32, 62, 54, 8, 95, 73, 19, 90, 23, 48, 6, 3];
 <span class="boring">println!(&quot;before: {:?}&quot;, v);
